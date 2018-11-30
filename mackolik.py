@@ -11,9 +11,12 @@ kelime=[]
 yeni_sirali_yillar=[]
 yeni_kelime=[]
 l=""
+# tablolarda hangi yıllar var ise listesini çıkarmakta
 yillar= soup.find("div",attrs={"data-instance-id":"page-season-picker"}).find("select",attrs={"class":"component-dropdown__native"}).find_all("option")
+# yılların hepsini bir diziye aktarmakta
 for c in yillar:
     sirali_yillar.append(c.text.strip())
+# aktardığı her elemanda 2018/2019 şeklinde bunların 2018-2019 şeklinde olması lazım düzeltme yapmakta
 for k in sirali_yillar:
     if len(k)>4:
         kelime=k
@@ -23,6 +26,7 @@ for k in sirali_yillar:
             l=l+t
         yeni_sirali_yillar.append(l)
         l=""
+# her yılın linkine ayrı ayrı gidip o yıla ait puan tablolarını çıkarmakta
 for z in yeni_sirali_yillar:
     degisen_url = requests.get("https://www.mackolik.com/puan-durumu/t%C3%BCrkiye-spor-toto-s%C3%BCper-lig/"+str(z)+"/482ofyysbdbeoxauk19yg7tdt",headers_param)
     soup1 = BeautifulSoup(degisen_url.content,"lxml")
