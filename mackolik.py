@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-headers_param={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36}"}
+# * olan kısımlara kendi user-agent yazılmalı
+headers_param={"User-Agent": "********"}
 url = requests.get("https://www.mackolik.com/puan-durumu/t%C3%BCrkiye-spor-toto-s%C3%BCper-lig/2018-2019/482ofyysbdbeoxauk19yg7tdt",headers_param)
 soup = BeautifulSoup(url.content,"lxml")
 yil=[]
@@ -26,6 +27,7 @@ for z in yeni_sirali_yillar:
     degisen_url = requests.get("https://www.mackolik.com/puan-durumu/t%C3%BCrkiye-spor-toto-s%C3%BCper-lig/"+str(z)+"/482ofyysbdbeoxauk19yg7tdt",headers_param)
     soup1 = BeautifulSoup(degisen_url.content,"lxml")
     takim= soup1.find("table",attrs={"class":"p0c-competition-tables__table p0c-competition-tables__table--total"}).tbody.find_all("tr")
+    print("-" * 60)
     print("*" * 60)
     print("{}".format(z))
     print("*" * 60)
@@ -41,4 +43,3 @@ for z in yeni_sirali_yillar:
         puan = i.select("td:nth-of-type(12)")[0].text.strip()
 
         print(" {} {} {} {} {} {} {} {} {} ".format(takimlar,oynadigi,galibiyet,beraberlik,maglubiyet,attigi,yedigi,averaj,puan))
-
